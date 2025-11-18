@@ -1,37 +1,111 @@
-import { tipoJugador } from "../enums/TipoJugador.js";
+import { tipoJugador } from "../constants/Constants,js";
 
 export class Jugador {
-  constructor(
-    nombre = tipoJugador.cazador.nombre,
-    vida = tipoJugador.cazador.vida,
-    avatar = tipoJugador.cazador.avatar,
-    puntos = tipoJugador.cazador.puntos,
-    vidaMaxima = tipoJugador.cazador.vidaMaxima,
-    inventario = tipoJugador.cazador.inventario,
-    ataque = tipoJugador.cazador.ataque,
-    defensa = tipoJugador.cazador.defensa
-  ) {
-    this.nombre = nombre;
-    this.vida = vida;
-    this.avatar = avatar;
-    this.puntos = puntos;
-    this.vidaMaxima = vidaMaxima;
-    this.inventario = inventario;
-    this.ataque = ataque;
-    this.defensa = defensa;
+  constructor(nombre = tipoJugador.cazador.nombre, jugadorTipo) {
+    this._nombre = nombre;
+    this._hp = tipoJugador[jugadorTipo].hp;
+    this._avatar = tipoJugador[jugadorTipo].avatar;
+    this._puntos = tipoJugador[jugadorTipo].puntos;
+    this._vidaMaxima = tipoJugador[jugadorTipo].vidaMaxima;
+    this._inventario = tipoJugador[jugadorTipo].inventario;
+    this._ataque = tipoJugador[jugadorTipo].ataque;
+    this._defensa = tipoJugador[jugadorTipo].defensa;
   }
-
-  
-
+  get nombre() {
+    return this._nombre;
+  }
+  get hp() {
+    return this._hp;
+  }
+  get avatar() {
+    return this._avatar;
+  }
+  get puntos() {
+    return this._puntos;
+  }
+  get vidaMaxima() {
+    return this._vidaMaxima;
+  }
+  get inventario() {
+    return this._inventario;
+  }
+  get ataque() {
+    return this._ataque;
+  }
+  get defensa() {
+    return this._defensa;
+  }
+  set nombre(nombre) {
+    this._nombre = nombre;
+  }
+  set hp(hp) {
+    this._hp = hp;
+  }
+  set avatar(avatar) {
+    this._avatar = avatar;
+  }
+  set puntos(puntos) {
+    this._puntos = puntos;
+  }
+  set vidaMaxima(vidaMaxima) {
+    this._vidaMaxima = vidaMaxima;
+  }
+  set inventario(inventario) {
+    this._inventario = inventario;
+  }
+  set ataque(ataque) {
+    this._ataque = ataque;
+  }
+  set defensa(defensa) {
+    this._defensa = defensa;
+  }
   sumarPuntos = function (puntos) {
-    this.puntos += puntos;
+    this._puntos += puntos;
   };
-  // addInventario = function (){}
-  // ataqueTotal = function () {
-  //     this.ataque = inventario.reduce(() => );
-  // };
-  // defensaTotal = function () {    this.defensa = inventario.reduce(() => );
-  // };
-  //   vidaTotal = function () {    this.vida =  this.vida + inventario.reduce(() => ) > this.vidaMaxima ? this.vidaMaxima : this.vida + inventario.reduce(() => );
-  // };
+
+  addObjInventario = function (producto) {
+    const longitudMax = 6;
+    if (this._inventario.length >= longitudMax) {
+      console.log("no se puede comprar más");
+      return;
+    }
+    const productoComprado = structuredClone(producto);
+    this._inventario.push(productoComprado);
+    this.visualEfectos();
+  };
+
+  addEstadistica = function () {
+    if (!this.verificarTamInventario()) return;
+    this.ataqueTotal();
+    this.defensaTotal();
+    this.vidaTotal();
+  };
+
+  ataqueTotal = function () {
+    const bonusAtaque = this._inventario
+      .filter((producto) => producto.tipo === "arma")
+      .reduce((total, producto) => total + producto.bonus, 0);
+    return this._ataque + bonusAtaque;
+  };
+  defensaTotal = function () {
+    const bonusDefensa = this.inventario
+      .filter((producto) => producto.tipo === "armadura")
+      .reduce((total, producto) => total + producto.bonus, 0);
+    return this._defensa + bonusDefensa;
+  };
+  vidaTotal = function () {
+    const bonusHp = this.inventario
+      .filter((producto) => producto.tipo === "consumible")
+      .reduce((total, producto) => total + producto.bonus, 0);
+    return this._hp + bonusHp;
+  };
+
+  verificarTamInventario = function () {
+    if (!this.inventario || this.inventario.length <= 0) return false;
+    else return true;
+  };
+
+  visualEfectos = function () {
+    console.log("efecto del boton, del color de la tarjeta");
+  };
 }

@@ -1,23 +1,62 @@
-//     - **Arma:** El bonus se suma al ataque.
-//     - **Armadura:** El bonus se suma a la defensa.
-//     - **Consumible:** El bonus se suma a la vida.
-// - **Métodos:**
-//     - `Formatear atributos`: Ej. convertir precio `950` a `9,50€`.
-//     - `Aplicar un descuento`: Recibe un valor y devuelve una **nueva copia** (clon) del producto con el precio modificado.
+import { productosComprar } from "../constants/Constants.js";
 
-class Producto {
-  constructor(nombre, imagen, precio, rareza, tipo, bonus) {
-    this.nombre = nombre;
-    this.imagen = imagen;
-    this.precio = precio;
-    this.rareza = rareza;
-    this.tipo = tipo;
-    this.bonus = bonus;
+export class Producto {
+  constructor(claveProductos) {
+    this._nombre = productosComprar[claveProductos].nombre;
+    this._imagen = productosComprar[claveProductos].imagen;
+    this._precio = productosComprar[claveProductos].precio;
+    this._rareza = productosComprar[claveProductos].rareza;
+    this._tipo = productosComprar[claveProductos].tipo;
+    this._bonus = productosComprar[claveProductos].bonus;
+  }
+  get nombre() {
+    return this._nombre;
+  }
+  get imagen() {
+    return this._imagen;
+  }
+  get precio() {
+    return this._precio;
+  }
+  get rareza() {
+    return this._rareza;
+  }
+  get tipo() {
+    return this._tipo;
+  }
+  get bonus() {
+    return this._bonus;
+  }
+  set nombre(nombre) {
+    this._nombre = nombre;
+  }
+  set imagen(imagen) {
+    this._imagen = imagen;
+  }
+  set precio(precio) {
+    this._precio = precio;
+  }
+  set rareza(rareza) {
+    this._rareza = rareza;
+  }
+  set tipo(tipo) {
+    this._tipo = tipo;
+  }
+  set bonus(bonus) {
+    this._bonus = bonus;
   }
 
   formatearAtributos = function (precioNum) {
-    
-    return `${precioNum}€`;
+    const precio = (precioNum / 100).toFixed(2).replace(".", ",") + "€";
+    return precio;
   };
-  aplicarDescuento = function (producto) {};
+
+  aplicarDescuento = function (producto, descuento = 0.2) {
+    if (producto.rareza != "raro") {
+      return;
+    }
+    const productoComprado = structuredClone(producto);
+    productoComprado.precio = producto.precio * (1 - descuento);
+    return productoComprado;
+  };
 }
