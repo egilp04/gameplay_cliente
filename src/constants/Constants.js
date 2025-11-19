@@ -125,7 +125,7 @@ const vidaMaximaJugador = 100;
 const puntosBase = 100;
 export const tipoJugador = {
   cazador: {
-    nombre: "eve",
+    nombre: "Cazador",
     hp: 30,
     avatar: "src/assests/img/character_img/cazador.png",
     puntos: puntosBase,

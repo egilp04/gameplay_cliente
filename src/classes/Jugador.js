@@ -1,4 +1,4 @@
-import { tipoJugador } from "../constants/Constants,js";
+import { tipoJugador } from "../constants/Constants.js";
 
 export class Jugador {
   constructor(jugadorTipo) {
