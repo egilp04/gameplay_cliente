@@ -1,10 +1,32 @@
-// 5.5 Módulo Batalla
-// Función combate(enemigo, jugador) :
-// Retorno: El ganador y los puntos obtenidos por el jugador (0 si pierde).
-// Lógica de Turnos: Se repite hasta que la vida de uno llegue a 0.
-// Cálculo por Turno:
-// Vida del jugador = (vida actual + defensa) - ataque enemigo
-// Vida del enemigo = vida actual - ataque jugador
-// Cálculo de Puntos (al ganar):
-// Puntos = 100 (base) + ataque del enemigo .
-// Si es un Jefe : Puntos = Puntos * multiplicador de daño .
+export const Batalla = {
+  muerte: 0,
+  combate: function (enemigo, jugador) {
+    let {
+      ataqueTotal,
+      defensaTotal,
+      vidaTotal: vidaJugador,
+    } = jugador.obtenerEstadisticasFinales();
+    let vidaEnemigo = enemigo.hp;
+    const ataqueEnemigo = enemigo.ataque;
+
+    do {
+      vidaJugador = Math.max(
+        vidaJugador + defensaTotal - ataqueEnemigo,
+        this.muerte
+      );
+      vidaEnemigo = Math.max(vidaEnemigo - ataqueTotal, this.muerte);
+    } while (vidaJugador > this.muerte && vidaEnemigo > this.muerte);
+
+    const ganador = vidaJugador > 0 ? jugador : enemigo;
+    let puntos = 0;
+
+    if (ganador == jugador) {
+      if (enemigo instanceof Jefe)
+        puntos = jugador.sumarPuntos(
+          ataqueEnemigo * enemigo.multiplicadorDanio
+        );
+      else puntos = jugador.sumarPuntos(ataqueEnemigo);
+    }
+    return { ganador, puntos };
+  },
+};

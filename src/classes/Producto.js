@@ -1,13 +1,13 @@
 import { productosComprar } from "../constants/Constants.js";
 
 export class Producto {
-  constructor(claveProductos) {
-    this._nombre = productosComprar[claveProductos].nombre;
-    this._imagen = productosComprar[claveProductos].imagen;
-    this._precio = productosComprar[claveProductos].precio;
-    this._rareza = productosComprar[claveProductos].rareza;
-    this._tipo = productosComprar[claveProductos].tipo;
-    this._bonus = productosComprar[claveProductos].bonus;
+  constructor(claveProducto) {
+    this._nombre = productosComprar[claveProducto].nombre;
+    this._imagen = productosComprar[claveProducto].imagen;
+    this._precio = productosComprar[claveProducto].precio;
+    this._rareza = productosComprar[claveProducto].rareza;
+    this._tipo = productosComprar[claveProducto].tipo;
+    this._bonus = productosComprar[claveProducto].bonus;
   }
   get nombre() {
     return this._nombre;
@@ -51,10 +51,7 @@ export class Producto {
     return precio;
   };
 
-  aplicarDescuento = function (producto, descuento = 0.2) {
-    if (producto.rareza != "raro") {
-      return;
-    }
+  aplicarDescuento = function (producto, descuento) {
     const productoComprado = structuredClone(producto);
     productoComprado.precio = producto.precio * (1 - descuento);
     return productoComprado;

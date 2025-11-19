@@ -15,17 +15,23 @@ export const Mercado = {
   listaProdcutosFinales: [],
   filtrarProductos: function (tipoRareza) {
     return this.listaProductos.filter(
-      (elemento) => tipoRareza === elemento.rareza
+      (producto) => tipoRareza === producto.rareza
     );
   },
-  aplicarDescuento: function (producto, descuento = 0.2) {
-    const productoConDescuento = producto.aplicarDescuento(producto, descuento);
-    if (productoConDescuento)
-      this.listaProdcutosFinales.push(productoConDescuento);
+  aplicarDescuento: function (tipoRareza = "raro", descuento = 0.2) {
+    this.listaProductos.forEach((producto) => {
+      if (producto.rareza === tipoRareza)
+        this.listaProdcutosFinales.push(
+          producto.aplicarDescuento(producto, descuento)
+        );
+    });
   },
   buscarProducto: function (nombreProducto) {
     return his.listaProductos.filter(
-      (elemento) => nombreProducto === elemento.nombre
+      (producto) => nombreProducto === producto.nombre
     );
+  },
+  obtenerListaProdcutosFinales() {
+    return this.listaProdcutosFinales;
   },
 };

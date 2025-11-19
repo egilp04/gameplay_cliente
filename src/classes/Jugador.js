@@ -1,8 +1,8 @@
 import { tipoJugador } from "../constants/Constants,js";
 
 export class Jugador {
-  constructor(nombre = tipoJugador.cazador.nombre, jugadorTipo) {
-    this._nombre = nombre;
+  constructor(jugadorTipo) {
+    this._nombre = tipoJugador[jugadorTipo].nombre;
     this._hp = tipoJugador[jugadorTipo].hp;
     this._avatar = tipoJugador[jugadorTipo].avatar;
     this._puntos = tipoJugador[jugadorTipo].puntos;
@@ -59,8 +59,10 @@ export class Jugador {
   set defensa(defensa) {
     this._defensa = defensa;
   }
+
   sumarPuntos = function (puntos) {
     this._puntos += puntos;
+    return this._puntos;
   };
 
   addObjInventario = function (producto) {
@@ -74,30 +76,38 @@ export class Jugador {
     this.visualEfectos();
   };
 
-  addEstadistica = function () {
-    if (!this.verificarTamInventario()) return;
-    this.ataqueTotal();
-    this.defensaTotal();
-    this.vidaTotal();
+  obtenerEstadisticasFinales = function () {
+    if (!this.verificarTamInventario()) {
+      return {
+        ataqueTotal: this._ataque,
+        defensaTotal: this._defensa,
+        vidaTotal: this._hp,
+      };
+    }
+    return {
+      ataqueTotal: this.obtenerAtaqueTotal(),
+      defensaTotal: this.obtenerDefensaTotal(),
+      vidaTotal: this.obtenerVidaTotal(),
+    };
   };
 
-  ataqueTotal = function () {
+  obtenerAtaqueTotal = function () {
     const bonusAtaque = this._inventario
       .filter((producto) => producto.tipo === "arma")
       .reduce((total, producto) => total + producto.bonus, 0);
     return this._ataque + bonusAtaque;
   };
-  defensaTotal = function () {
-    const bonusDefensa = this.inventario
+  obtenerDefensaTotal = function () {
+    const bonusDefensa = this._inventario
       .filter((producto) => producto.tipo === "armadura")
       .reduce((total, producto) => total + producto.bonus, 0);
     return this._defensa + bonusDefensa;
   };
-  vidaTotal = function () {
-    const bonusHp = this.inventario
+  obtenerVidaTotal = function () {
+    const bonusHp = this._inventario
       .filter((producto) => producto.tipo === "consumible")
       .reduce((total, producto) => total + producto.bonus, 0);
-    return this._hp + bonusHp;
+    return Math.min(this._hp + bonusHp, this._vidaMaxima);
   };
 
   verificarTamInventario = function () {
