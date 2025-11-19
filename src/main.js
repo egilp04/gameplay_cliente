@@ -13,17 +13,18 @@ import { Mercado } from "./modules_game/Mercado.js";
 window.addEventListener("load", iniciarJuego);
 
 function iniciarJuego(e) {
-  const titleElement = (document.getElementById("title").textContent =
-    "Aventura JS");
-  const seccion1 = document.getElementById("seccion-1");
   const jugador = new Jugador("cazador");
-  const imagen = document
+  const seccion1 = document.getElementById("seccion-1");
+  mostrarSeccion(seccion1.id);
+
+  //   elementos de la seccion1
+  document.getElementById("title").textContent = "Aventura JS";
+  document
     .getElementById("imagen-jugador")
     .setAttribute("src", `${jugador.avatar}`);
-  const nombreJugador = (document
+  document
     .getElementById("nombre-jugador-container")
-    .querySelector("h2").textContent = `${jugador.nombre}`);
-
+    .querySelector("h2").textContent = `${jugador.nombre}`;
   const valores = Array.from(document.querySelectorAll(".valor"));
   const valoresJugador = [
     jugador.ataque,
@@ -34,4 +35,19 @@ function iniciarJuego(e) {
   valores.forEach((valor, i) => {
     valor.textContent = `${valoresJugador[i]}`;
   });
+
+  const boton = seccion1.querySelector("button");
+  boton.addEventListener("click", (e) => {
+    mostrarSeccion("seccion-2");
+  });
+}
+
+function mostrarSeccion(id) {
+  const secciones = Array.from(document.querySelectorAll(".seccion"));
+  secciones.forEach((seccion) => {
+    seccion.style.display = "none";
+  });
+
+  const seccionMostrar = document.getElementById(id);
+  seccionMostrar.style.display = "";
 }
