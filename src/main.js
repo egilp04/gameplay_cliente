@@ -1,9 +1,26 @@
-import { Jugador } from "./classes/Jugador.js";
-import { Enemigo } from "./classes/Enemigo.js";
-import { Jefe } from "./classes/Jefe.js";
-import { Batalla } from "./modules_game/Batalla.js";
-import { Ranking } from "./modules_game/Ranking.js";
-import { Mercado } from "./modules_game/Mercado.js";
+import { Cazador } from "./classes/indexJugadores.js";
+import {
+  Goblin,
+  Bandido,
+  Dragon,
+  Lobo,
+  Jefe,
+} from "./classes/indexEnemigos.js";
+import {
+  avatarCazador,
+  avatarGoblin,
+  avatarBandido,
+  avatarDragon,
+  avatarLobo,
+} from "./constants/Constants.js";
+import { combate } from "./modules_game/Batalla.js";
+import { distinguirJugador } from "./modules_game/Ranking.js";
+import {
+  filtrarProductos,
+  aplicarDescuento,
+  buscarProductoNombre,
+  obtenerListaProductosFinales,
+} from "./modules_game/Mercado.js";
 
 //   const seccion2 = document.getElementById("seccion-2");
 //   const seccion3 = document.getElementById("seccion-3");
@@ -13,7 +30,15 @@ import { Mercado } from "./modules_game/Mercado.js";
 window.addEventListener("load", iniciarJuego);
 
 function iniciarJuego(e) {
-  const jugador = new Jugador("cazador");
+  const jugador = new Cazador("Cazador", 30, avatarCazador, 50, 30);
+  const enemigos = [
+    new Goblin("Goblin", avatarGoblin, 6, 30),
+    new Lobo("Lobo", avatarLobo, 9, 42),
+    new Dragon("Dragon", avatarDragon, 28, 140, "aliento Igeno"),
+    new Bandido("Bandido", avatarBandido, 12, 55),
+    new Jefe("Jefe", avatarJefe, 12, 55),
+  ];
+
   const seccion1 = document.getElementById("seccion-1");
   mostrarSeccion(seccion1.id);
 
@@ -51,3 +76,5 @@ function mostrarSeccion(id) {
   const seccionMostrar = document.getElementById(id);
   seccionMostrar.style.display = "";
 }
+
+function seccion1() {}

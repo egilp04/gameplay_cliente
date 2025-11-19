@@ -1,13 +1,11 @@
-import { productosComprar } from "../constants/Constants.js";
-
 export class Producto {
-  constructor(claveProducto) {
-    this._nombre = productosComprar[claveProducto].nombre;
-    this._imagen = productosComprar[claveProducto].imagen;
-    this._precio = productosComprar[claveProducto].precio;
-    this._rareza = productosComprar[claveProducto].rareza;
-    this._tipo = productosComprar[claveProducto].tipo;
-    this._bonus = productosComprar[claveProducto].bonus;
+  constructor(nombre, imagen, precio, rareza, tipo, bonus) {
+    this._nombre = nombre;
+    this._imagen = imagen;
+    this._precio = precio;
+    this._rareza = rareza;
+    this._tipo = tipo;
+    this._bonus = bonus;
   }
   get nombre() {
     return this._nombre;

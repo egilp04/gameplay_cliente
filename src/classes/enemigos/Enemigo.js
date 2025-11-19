@@ -1,10 +1,9 @@
-import { tipoEnemigo } from "../constants/Constants.js";
 export class Enemigo {
-  constructor(tipoEn) {
-    this._nombre = tipoEnemigo[tipoEn].nombre;
-    this._avatar = tipoEnemigo[tipoEn].avatar;
-    this._ataque = tipoEnemigo[tipoEn].atacque;
-    this._hp = tipoEnemigo[tipoEn].hp;
+  constructor(nombre, avatar, ataque, hp) {
+    this._nombre = nombre;
+    this._avatar = avatar;
+    this._ataque = ataque;
+    this._hp = hp;
   }
   set nombre(nombre) {
     this._nombre = nombre;

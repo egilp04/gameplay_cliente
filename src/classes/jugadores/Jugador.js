@@ -1,15 +1,22 @@
-import { tipoJugador } from "../constants/Constants.js";
-
 export class Jugador {
-  constructor(jugadorTipo) {
-    this._nombre = tipoJugador[jugadorTipo].nombre;
-    this._hp = tipoJugador[jugadorTipo].hp;
-    this._avatar = tipoJugador[jugadorTipo].avatar;
-    this._puntos = tipoJugador[jugadorTipo].puntos;
-    this._vidaMaxima = tipoJugador[jugadorTipo].vidaMaxima;
-    this._inventario = tipoJugador[jugadorTipo].inventario;
-    this._ataque = tipoJugador[jugadorTipo].ataque;
-    this._defensa = tipoJugador[jugadorTipo].defensa;
+  constructor(
+    nombre,
+    hp,
+    avatar,
+    ataque,
+    defensa,
+    puntos,
+    vidaMaxima,
+    inventario
+  ) {
+    this._nombre = nombre;
+    this._hp = hp;
+    this._avatar = avatar;
+    this._ataque = ataque;
+    this._defensa = defensa;
+    this._puntos = puntos;
+    this._vidaMaxima = vidaMaxima;
+    this._inventario = inventario;
   }
   get nombre() {
     return this._nombre;
@@ -95,19 +102,24 @@ export class Jugador {
     const bonusAtaque = this._inventario
       .filter((producto) => producto.tipo === "arma")
       .reduce((total, producto) => total + producto.bonus, 0);
-    return this._ataque + bonusAtaque;
+    this._ataque += bonusAtaque;
+    return this._ataque;
   };
+
   obtenerDefensaTotal = function () {
     const bonusDefensa = this._inventario
       .filter((producto) => producto.tipo === "armadura")
       .reduce((total, producto) => total + producto.bonus, 0);
-    return this._defensa + bonusDefensa;
+    this._defensa += bonusDefensa;
+    return this._defensa;
   };
+
   obtenerVidaTotal = function () {
     const bonusHp = this._inventario
       .filter((producto) => producto.tipo === "consumible")
       .reduce((total, producto) => total + producto.bonus, 0);
-    return Math.min(this._hp + bonusHp, this._vidaMaxima);
+    this._hp = Math.min(this._hp + bonusHp, this._vidaMaxima);
+    return this._hp;
   };
 
   verificarTamInventario = function () {
