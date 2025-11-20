@@ -69,7 +69,7 @@ function seccion2Function(seccion2, jugador) {
 
     const spanBonusProducto = document.createElement("span");
     const tipoProducto = `${producto.tipo}`;
-    spanBonusProducto.textContent = `${estadisticaAumenta(tipoProducto)}: ${
+    spanBonusProducto.textContent = `${estadisticaAportaArma(tipoProducto)}: ${
       producto.bonus
     }`;
 
@@ -109,6 +109,7 @@ function seccion2Function(seccion2, jugador) {
 
       rellenarCasillas(jugador);
     });
+
     divImgProducto.appendChild(imgProducto);
     divProducto.appendChild(divImgProducto);
     divDataProducto.appendChild(spanNombreProducto);
@@ -116,7 +117,6 @@ function seccion2Function(seccion2, jugador) {
     divDataProducto.appendChild(spanPrecioProducto);
     divProducto.appendChild(divDataProducto);
     divProducto.appendChild(botonComprar);
-
     mercadoContainer.appendChild(divProducto);
   });
 
@@ -257,12 +257,10 @@ function datosJugador(jugador, seccionid) {
     valor.textContent = `${valoresJugador[i]}`;
   });
 }
-
 function encontrarProducto(listaProducto, indiceProducto) {
   return listaProducto[indiceProducto];
 }
-
-function estadisticaAumenta(tipoArma) {
+function estadisticaAportaArma(tipoArma) {
   switch (tipoArma) {
     case "arma":
       return "Ataque";
@@ -274,7 +272,6 @@ function estadisticaAumenta(tipoArma) {
       break;
   }
 }
-
 function rellenarCasillas(jugador) {
   const inventario = jugador.inventario;
   const casillas = Array.from(document.querySelectorAll(".casilla"));
@@ -282,7 +279,6 @@ function rellenarCasillas(jugador) {
     casilla.innerHTML = "";
     const imagenProdcutoDiv = document.createElement("div");
     imagenProdcutoDiv.setAttribute("id", `${i}`);
-
     const imagenProducto = document.createElement("img");
     const producto = inventario[i];
     if (producto) {
@@ -293,7 +289,6 @@ function rellenarCasillas(jugador) {
     }
   });
 }
-
 function efectosVisuales() {
   console.log("efecto del boton, del color de la tarjeta");
 }
