@@ -135,8 +135,4 @@ export class Jugador {
     if (!this.inventario || this.inventario.length <= 0) return false;
     else return true;
   };
-
-  visualEfectos = function () {
-    console.log("efecto del boton, del color de la tarjeta");
-  };
 }
