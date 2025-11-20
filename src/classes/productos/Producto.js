@@ -49,9 +49,18 @@ export class Producto {
     return precio;
   };
 
-  aplicarDescuento = function (producto, descuento) {
-    const productoComprado = structuredClone(producto);
-    productoComprado.precio = producto.precio * (1 - descuento);
-    return productoComprado;
+  aplicarDescuento = function (descuento) {
+    this._precio *= 1 - descuento;
+  };
+
+  clonarProducto = function () {
+    return new Producto(
+      this._nombre,
+      this._imagen,
+      this._precio,
+      this._rareza,
+      this._tipo,
+      this._bonus
+    );
   };
 }
