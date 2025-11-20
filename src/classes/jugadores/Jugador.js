@@ -74,22 +74,16 @@ export class Jugador {
   };
 
   addObjInventario = function (producto, longitudMax = 6) {
-    if (this._inventario.length >= longitudMax) {
-      console.log("no se puede comprar más");
-      return;
-    }
     const productoComprado = producto.clonarProducto();
     this._inventario.push(productoComprado);
-    return this._inventario;
   };
 
   eliminarObjInventario = function (producto) {
     const indexDelete = this._inventario.findIndex(
       (p) => p.nombre === producto.nombre
     );
-    if (indexDelete === -1) return false;
+    if (indexDelete === -1) return;
     this._inventario.splice(indexDelete, 1);
-    return true;
   };
 
   obtenerEstadisticasFinales = function () {
